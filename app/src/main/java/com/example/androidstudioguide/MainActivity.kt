@@ -1,7 +1,9 @@
 package com.example.androidstudioguide
 
+import android.Manifest
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import coil.compose.AsyncImage
+import androidx.core.app.ActivityCompat
 import com.example.androidstudioguide.ui.theme.AndroidStudioGuideTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,10 +30,13 @@ class MainActivity : ComponentActivity() {
             airPlaneModeReceiver, // Dynamic Broadcasting Receiver - Activates when app is open
             IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
         )
-//        registerReceiver(
-//            testReceiver,
-//            IntentFilter("Test_Action")
-//        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                0
+            )
+        }
         setContent {
             AndroidStudioGuideTheme {
                 Column(
@@ -39,68 +44,28 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    viewModal.uri?.let {
-                        AsyncImage(model = viewModal.uri, contentDescription = null)
+                    Button(onClick = {
+                        Intent(applicationContext, RunningServices::class.java).also {
+                            it.action = RunningServices.Actions.START.toString()
+                            startService(it)
+                        }
+                    }) {
+                        Text(text = "Start Run!")
                     }
                     Button(onClick = {
-                        sendBroadcast(
-                            Intent("Test_Action")
-                        )
+                        Intent(applicationContext, RunningServices::class.java).also {
+                            it.action = RunningServices.Actions.STOP.toString()
+                            startService(it)
+                        }
                     }) {
-//                        Explicit Intent:
-//                        Intent to Launch our own activity
-//                        Intent(applicationContext, SecondActivity::class.java).also {
-//                            startActivity(it)
-//                        }
-//                        Intent to Launch Activity outside of our own app - Youtube
-//                        Intent(Intent.ACTION_MAIN).also {
-//                            it.`package` = "com.google.android.youtube"
-//                            try {
-//                                startActivity(it)
-//                            } catch (e : ActivityNotFoundException){
-//                                e.printStackTrace()
-//                            }
-//                        }
-//                        Implicit Intent:
-//                        val intent = Intent(Intent.ACTION_SEND).apply {
-//                            type = "text/plain"
-//                            putExtra(Intent.EXTRA_EMAIL, arrayOf("test@test.com"))
-//                            putExtra(Intent.EXTRA_SUBJECT, "This is my Subject")
-//                            putExtra(Intent.EXTRA_TEXT, "This is the content of my email.")
-//                        }
-//                        if(intent.resolveActivity(packageManager) != null){
-//                            startActivity(intent)
-//                        }
-//                    }) {
-//                        Text(text = "Click!")
-//                    }
-                        Text(text = "Send Broadcast")
-//                Image(painter = painterResource(id = R.drawable.kermit),
-//                      contentDescription = "Kermit the Frog",
-//                      modifier = Modifier.fillMaxWidth())
-//               Surface(modifier = Modifier.fillMaxSize(), color = viewModal.backgroundColor){
-//                    Button(onClick = { viewModal.changeBackgroundColor() }) {
-//                        Text(text = "Change Color")
-//                    }
-//                }
+                        Text(text = "Stop Run")
                     }
                 }
             }
-    }
-
-//    override fun onNewIntent(intent: Intent) {
-//        super.onNewIntent(intent)
-//        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
-//        } else {
-//            intent.getParcelableExtra(Intent.EXTRA_STREAM)
-//        }
-//
-//        viewModal.updateUri(uri)
+        }
     }
     override fun onDestroy(){
         super.onDestroy()
         unregisterReceiver(airPlaneModeReceiver)
-//        unregisterReceiver(testReceiver)
     }
 }

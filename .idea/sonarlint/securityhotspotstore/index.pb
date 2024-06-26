@@ -19,3 +19,9 @@ x
 Happ/src/main/java/com/example/androidstudioguide/AirPlaneModeReceiver.kt,2\0\20b15bf2a09a2dd8fbff743c13507c47b0fec3a3
 p
 @app/src/main/java/com/example/androidstudioguide/TestReceiver.kt,7\a\7aab4682f75d2d6fc29379758b647e5c99090b1d
+s
+Capp/src/main/java/com/example/androidstudioguide/RunningServices.kt,3\f\3f0244b0c74fcad00567cc9aa909406a2d2fc0c0
+q
+Aapp/src/main/java/com/example/androidstudioguide/RunningAppp.java,3\d\3d33a1a408ff909503004a9fbf525eed24d2c757
+n
+>app/src/main/java/com/example/androidstudioguide/RunningApp.kt,9\0\909a01cbb68c8837cdd6605055da7ce95fc06107
