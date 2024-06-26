@@ -9,3 +9,5 @@ D
 app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
 r
 Bapp/src/main/java/com/example/androidstudioguide/LoginViewModal.kt,0\0\00b6c2e7e8b38817e2c8e8d8fbfd2b6d0094e297
+q
+Aapp/src/main/java/com/example/androidstudioguide/MyApplication.kt,a\7\a71ce4111b8f8799f228797005b23c2623cefe3b
