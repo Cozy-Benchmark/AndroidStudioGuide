@@ -11,3 +11,7 @@ r
 Bapp/src/main/java/com/example/androidstudioguide/LoginViewModal.kt,0\0\00b6c2e7e8b38817e2c8e8d8fbfd2b6d0094e297
 q
 Aapp/src/main/java/com/example/androidstudioguide/MyApplication.kt,a\7\a71ce4111b8f8799f228797005b23c2623cefe3b
+r
+Bapp/src/main/java/com/example/androidstudioguide/SecondActivity.kt,7\8\7831b0c735e9aabd38b97ebd412e22ed072473ab
+r
+Bapp/src/main/java/com/example/androidstudioguide/ImageViewModel.kt,e\6\e67a76c47795f1cd7937d533e7a55fa53dbb8d50
