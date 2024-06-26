@@ -1,8 +1,7 @@
 package com.example.androidstudioguide
 
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,9 +19,19 @@ import com.example.androidstudioguide.ui.theme.AndroidStudioGuideTheme
 
 class MainActivity : ComponentActivity() {
     private val viewModal by viewModels<ImageViewModel>()
+    private val airPlaneModeReceiver = AirPlaneModeReceiver()
+    private val testReceiver = TestReceiver()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        registerReceiver(
+            airPlaneModeReceiver, // Dynamic Broadcasting Receiver - Activates when app is open
+            IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        )
+//        registerReceiver(
+//            testReceiver,
+//            IntentFilter("Test_Action")
+//        )
         setContent {
             AndroidStudioGuideTheme {
                 Column(
@@ -34,6 +43,10 @@ class MainActivity : ComponentActivity() {
                         AsyncImage(model = viewModal.uri, contentDescription = null)
                     }
                     Button(onClick = {
+                        sendBroadcast(
+                            Intent("Test_Action")
+                        )
+                    }) {
 //                        Explicit Intent:
 //                        Intent to Launch our own activity
 //                        Intent(applicationContext, SecondActivity::class.java).also {
@@ -49,19 +62,19 @@ class MainActivity : ComponentActivity() {
 //                            }
 //                        }
 //                        Implicit Intent:
-                        val intent = Intent(Intent.ACTION_SEND).apply {
-                            type = "text/plain"
-                            putExtra(Intent.EXTRA_EMAIL, arrayOf("test@test.com"))
-                            putExtra(Intent.EXTRA_SUBJECT, "This is my Subject")
-                            putExtra(Intent.EXTRA_TEXT, "This is the content of my email.")
-                        }
-                        if(intent.resolveActivity(packageManager) != null){
-                            startActivity(intent)
-                        }
-                    }) {
-                        Text(text = "Click!")
-                    }
-                }
+//                        val intent = Intent(Intent.ACTION_SEND).apply {
+//                            type = "text/plain"
+//                            putExtra(Intent.EXTRA_EMAIL, arrayOf("test@test.com"))
+//                            putExtra(Intent.EXTRA_SUBJECT, "This is my Subject")
+//                            putExtra(Intent.EXTRA_TEXT, "This is the content of my email.")
+//                        }
+//                        if(intent.resolveActivity(packageManager) != null){
+//                            startActivity(intent)
+//                        }
+//                    }) {
+//                        Text(text = "Click!")
+//                    }
+                        Text(text = "Send Broadcast")
 //                Image(painter = painterResource(id = R.drawable.kermit),
 //                      contentDescription = "Kermit the Frog",
 //                      modifier = Modifier.fillMaxWidth())
@@ -70,19 +83,24 @@ class MainActivity : ComponentActivity() {
 //                        Text(text = "Change Color")
 //                    }
 //                }
-
+                    }
+                }
             }
-        }
     }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
-        } else {
-            intent.getParcelableExtra(Intent.EXTRA_STREAM)
-        }
-
-        viewModal.updateUri(uri)
+//    override fun onNewIntent(intent: Intent) {
+//        super.onNewIntent(intent)
+//        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            intent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)
+//        } else {
+//            intent.getParcelableExtra(Intent.EXTRA_STREAM)
+//        }
+//
+//        viewModal.updateUri(uri)
+    }
+    override fun onDestroy(){
+        super.onDestroy()
+        unregisterReceiver(airPlaneModeReceiver)
+//        unregisterReceiver(testReceiver)
     }
 }

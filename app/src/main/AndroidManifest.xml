@@ -30,6 +30,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".SecondActivity" />
+<!--Static Broadcsting Receiver-->
+<!--        <receiver android:name="">-->
+<!--            -->
+<!--        </receiver>-->
     </application>
 
     <queries>

@@ -15,3 +15,7 @@ r
 Bapp/src/main/java/com/example/androidstudioguide/SecondActivity.kt,7\8\7831b0c735e9aabd38b97ebd412e22ed072473ab
 r
 Bapp/src/main/java/com/example/androidstudioguide/ImageViewModel.kt,e\6\e67a76c47795f1cd7937d533e7a55fa53dbb8d50
+x
+Happ/src/main/java/com/example/androidstudioguide/AirPlaneModeReceiver.kt,2\0\20b15bf2a09a2dd8fbff743c13507c47b0fec3a3
+p
+@app/src/main/java/com/example/androidstudioguide/TestReceiver.kt,7\a\7aab4682f75d2d6fc29379758b647e5c99090b1d
